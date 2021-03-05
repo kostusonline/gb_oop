@@ -5,6 +5,10 @@
 *   Win10, MSVS 2019
 */
 
+/*
+WELL DONE!
+*/
+
 #include <iostream>
 #include <cmath>
 #include <cstdint>
@@ -18,7 +22,7 @@ class Power {
 public:
     void set(double x, double y) {
         m_x = x;
-        m_y = y < 0 ? 0 : y;
+        m_y = y < 0 ? 0 : y; // :)
     }
 
     double calculate(double x, double y, bool print = true) {
@@ -65,6 +69,11 @@ public:
     RGBA(uint8_t r, uint8_t g, uint8_t b, uint8_t a) {
         set(r, g, b, a);
     }
+    
+    /*RGBA(uint8_t r, uint8_t g, uint8_t b, uint8_t a)
+        :_m_red(r), m_green(g), m_blue(b), m_alpha(a){}
+    also good variant    
+    */
 
 public:
     void set(uint8_t r, uint8_t g, uint8_t b, uint8_t a) {
@@ -92,6 +101,8 @@ class Stack {
         count = 0;
         for (int i = 0; i < STACK_SIZE; i++)
             m_arr[i] = 0;
+        
+        //std::memset  could be useful here
     }
 
 public:
