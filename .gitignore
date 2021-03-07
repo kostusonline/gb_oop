@@ -1,5 +1,11 @@
 build/*
 Build/*
+build
+Build
+*/build/*
+*/Build/*
+*/build
+*/Build
 
 Debug
 Debug/
