@@ -38,11 +38,16 @@ int main()
     std::cout << "My " << b.get_name() << " is " << b.get_color() << "." << endl;
     std::cout << "My " << c.get_name() << " is " << c.get_color() << "." << endl;
 
+	Fruit* f;
+	f = &c;
+    std::cout << "My " << f->get_name() << " is " << f->get_color() << "." << endl;
+
 	// output should look like this:
 	// My apple is red.
 	// My banana is yellow.
 	// My Granny Smith apple is green.
-
+	// + check virtual method
+	
 	cout << endl;
 	cout << "Part 3 (see source code)" << endl;
 
