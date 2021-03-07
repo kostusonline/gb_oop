@@ -1,0 +1,3 @@
+C:/Projects/gb/OOP/gb_oop/Lessons/Lesson2/build/CMakeFiles/lesson2.dir
+C:/Projects/gb/OOP/gb_oop/Lessons/Lesson2/build/CMakeFiles/edit_cache.dir
+C:/Projects/gb/OOP/gb_oop/Lessons/Lesson2/build/CMakeFiles/rebuild_cache.dir

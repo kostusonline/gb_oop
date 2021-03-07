@@ -1,0 +1,12 @@
+[
+{
+  "directory": "C:/Projects/gb/OOP/gb_oop/Lessons/Lesson2/build",
+  "command": "C:\\PROGRA~2\\MICROS~1\\2019\\COMMUN~1\\VC\\Tools\\Llvm\\x64\\bin\\clang.exe -I../include -IC:/Projects/gb/OOP/gb_oop/Lessons/Lesson2../include -g -Xclang -gcodeview -O0 -D_DEBUG -D_DLL -D_MT -Xclang --dependent-lib=msvcrtd -o CMakeFiles\\lesson2.dir\\src\\Lesson2.obj -c C:\\Projects\\gb\\OOP\\gb_oop\\Lessons\\Lesson2\\src\\Lesson2.cpp",
+  "file": "C:/Projects/gb/OOP/gb_oop/Lessons/Lesson2/src/Lesson2.cpp"
+},
+{
+  "directory": "C:/Projects/gb/OOP/gb_oop/Lessons/Lesson2/build",
+  "command": "C:\\PROGRA~2\\MICROS~1\\2019\\COMMUN~1\\VC\\Tools\\Llvm\\x64\\bin\\clang.exe -I../include -IC:/Projects/gb/OOP/gb_oop/Lessons/Lesson2../include -g -Xclang -gcodeview -O0 -D_DEBUG -D_DLL -D_MT -Xclang --dependent-lib=msvcrtd -o CMakeFiles\\lesson2.dir\\src\\main.obj -c C:\\Projects\\gb\\OOP\\gb_oop\\Lessons\\Lesson2\\src\\main.cpp",
+  "file": "C:/Projects/gb/OOP/gb_oop/Lessons/Lesson2/src/main.cpp"
+}
+]
