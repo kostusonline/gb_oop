@@ -83,9 +83,6 @@ void Student::print() {
 // Part 2
 //
 
-// Part 2
-//
-
 void Fruit::set_name(const char* name){
 	m_name = name;
 }
