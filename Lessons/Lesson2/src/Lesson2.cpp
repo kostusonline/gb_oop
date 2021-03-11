@@ -13,7 +13,7 @@ void Person::set_person(const string& fname, int age, Person::Sex sex, double we
 	}
 
 Person::Person() : m_age(0), m_sex(Person::Sex::Unknown), m_weight(0) {
-	auto b = m_fname.empty();
+	m_fname.clear();
 };
 
 Person::Person(const string& fname, int age, Person::Sex sex, double weight) {

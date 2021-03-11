@@ -88,8 +88,8 @@ Circle::Circle(double r) : Figure() {
 //
 
 Car::Car(){
-	auto b = m_brand.empty();
-	b = m_model.empty();
+	m_brand.clear();
+	m_model.clear();
 	cout << "Car::Car(): Hello!" << endl;
 }
 
@@ -100,8 +100,8 @@ Car::Car(const char* brand, const char* model) {
 }
 
 PassengerCar::PassengerCar() : Car() {
-	auto b = m_brand.empty();
-	b = m_model.empty();
+	m_brand.clear();
+	m_model.clear();
 	cout << "PassengerCar::PassengerCar(): Hello!" << endl;
 }
 
@@ -110,8 +110,8 @@ PassengerCar::PassengerCar(const char* brand, const char* model) : Car(brand, mo
 }
 
 Bus::Bus() : Car() {
-	auto b = m_brand.empty();
-	b = m_model.empty();
+	m_brand.clear();
+	m_model.clear();
 	cout << "Bus::Bus(): Hello!" << endl;
 }
 
@@ -120,8 +120,8 @@ Bus::Bus(const char* brand, const char* model) : Car(brand, model) {
 }
 
 Van::Van() : PassengerCar(), Bus(), Car() {
-	auto b = m_brand.empty();
-	b = m_model.empty();
+	m_brand.clear();
+	m_model.clear();
 	cout << "Van::Van(): Hello!" << endl;
 }
 
