@@ -54,6 +54,7 @@ public:
 	Student();
 	Student(int year);
 	Student(int year, const string& fname, int age, Person::Sex sex, double weight);
+	~Student();
 
 public:
 	virtual void print() override;

@@ -70,6 +70,10 @@ Student::Student(int year, const string& fname, int age, Person::Sex sex, double
 	set_year(year);
 };
 
+Student::~Student(){
+	m_count--;
+}
+
 void Student::print() {
 	cout 
 		<< m_fname << ", "

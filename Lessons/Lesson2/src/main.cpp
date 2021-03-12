@@ -15,17 +15,28 @@ int main()
 
 	Student::reset_count();
 
-	Student s1(1, "John Connor", 20, Person::Sex::Male, 70);
-	Student s2(2, "Sarah Connor", 21, Person::Sex::Female, 55);
-	Student s3(8, "John Dogget", 40, Person::Sex::Male, 76);
-	Student s4(1, "Schwartz", 42, Person::Sex::Unknown, 200);
+	Student* students[4];
+
+	int i = 0;
+	students[i++] = new Student(1, "John Connor", 20, Person::Sex::Male, 70);
+	students[i++] = new Student(2, "Sarah Connor", 21, Person::Sex::Female, 55);
+	students[i++] = new Student(8, "John Dogget", 40, Person::Sex::Male, 76);
+	students[i++] = new Student(1, "Schwartz", 42, Person::Sex::Unknown, 200);
 
 	cout << "Students: " << Student::get_count() << endl;
 
-	s1.print();
-	s2.print();
-	s3.print();
-	s4.print();
+	for (int j = 0; j < i; j++)
+		students[j]->print();
+
+	cout << "Remove one student..." << endl;
+	delete students[--i];
+	students[i] = NULL;
+
+	cout << "Students: " << Student::get_count() << endl;
+	for (int j = 0; j < i; j++){
+		students[j]->print();
+		delete students[j];
+	}
 
 	cout << endl;
 	cout << "Part 2:" << endl;
