@@ -174,8 +174,9 @@ const Fraction Fraction::operator-() const{
 	return Fraction(-m_n, m_d);
 }
 
-Fraction Fraction::operator-() {
-	return Fraction(-m_n, m_d);
+Fraction& Fraction::operator-() {
+	m_n = -m_n;
+	return *this; 
 }
 
 bool Fraction::operator==(const Fraction& rf) const{

@@ -191,7 +191,7 @@ public:
 	const Fraction operator/(const Fraction& rf) const;
 
 	const Fraction operator-() const; // destination - new object
-	Fraction operator-();
+	Fraction& operator-();
 
 	bool operator==(const Fraction& rf) const;
 	bool operator!=(const Fraction& rf) const { return !operator==(rf); }
