@@ -1,5 +1,8 @@
 #include <cmath>
 #include <string>
+#include <algorithm>
+#include <random>
+
 #include "bj.hpp"
 
 using namespace std;
@@ -78,6 +81,10 @@ ostream& operator<<(ostream& os, const Card& card)
     return os;
 }
 
+void Card::show_face(bool show){
+	m_faced_up = show;
+}
+
 /************************************************************** 
 				Hand
 **************************************************************/
@@ -94,6 +101,7 @@ const vector<Card*> Hand::get_cards() const{
 }
 
 void Hand::add_card(Card* pcard){
+    cout << *pcard << " added" << endl;
 	m_cards.push_back(pcard);
 }
 
@@ -155,12 +163,12 @@ GenericPlayer::GenericPlayer(string name){
 GenericPlayer::~GenericPlayer(){
 }
 
-bool GenericPlayer::is_boosted() const {
+bool GenericPlayer::is_busted() const {
 	return get_total() > 21;
 };
 
-void GenericPlayer::set_boost() const {
-	cout << m_name << " boosted!" << endl;
+void GenericPlayer::set_busted() const {
+	cout << m_name << " busted!" << endl;
 }
 
 const char* GenericPlayer::get_name() const {
@@ -170,27 +178,25 @@ const char* GenericPlayer::get_name() const {
 ostream& operator<<(ostream& os, const GenericPlayer& gp)
 {
     os << gp.get_name() << ": ";
-    
-    vector<Card*>::const_iterator ci;
-    if (!gp.get_cards().empty())
-    {
-		int cc = gp.get_cards().size();
+
+    vector<Card*> cards = gp.get_cards();
+    vector<Card*>::iterator ci;
+
+    if (!cards.empty()) {
+		int cc = cards.size(); 
 		int cn = 0;
-        for (ci = gp.get_cards().begin(); ci != gp.get_cards().end(); ++ci)
-        {
+        for (ci = cards.begin(); ci != cards.end(); ++ci) {
 			cn++;
             os << *(*ci);
 			if (cn < cc)
 				os << " | ";
         }
-        
-        if (gp.get_total() != 0)
-        {
+    
+        if (gp.get_total() != 0) {
             cout << "(" << gp.get_total() << ")";
         }
     }
-    else
-    {
+    else {
         os << "<empty>";
     }
     
@@ -249,12 +255,15 @@ House::House(const string &name){
 House::~House(){
 }
 
+void House::set_name(const char* name){
+	m_name = name;
+}
+
 bool House::is_hitting() const {
     return (get_total() <= 16);
 }
 
-void House::flip_first_card()
-{
+void House::flip_first_card(){
     if (!(m_cards.empty()))
     {
 		Card* pcard = get_cards()[0];
@@ -266,6 +275,81 @@ void House::flip_first_card()
     }
 }
 
+void House::show_first_card(bool show){
+    if (!(m_cards.empty()))
+    {
+		Card* pcard = get_cards()[0];
+        pcard->show_face(show);
+    }
+    else
+    {
+        cout << "No card to show!" << endl;
+    }
+}
+
+/************************************************************** 
+				Deck
+**************************************************************/
+
+Deck::Deck(){
+    m_cards.reserve(52);
+    populate();
+}
+
+Deck::~Deck(){
+}
+
+void Deck::populate(){
+	clear();
+    for (
+		int s = static_cast<int>(Card::Suites::Crosses); 
+		s <= static_cast<int>(Card::Suites::Hearts); 
+		++s)
+    {
+        for (
+			int v = static_cast<int>(Card::Values::Ace); 
+			v <= static_cast<int>(Card::Values::King); 
+			++v)
+        {
+			Card* c = new Card(
+				static_cast<Card::Suites>(s),
+                static_cast<Card::Values>(v), 
+				false);
+			add_card(c);
+        }
+    }
+}
+
+void Deck::shuffle(){
+ 	random_device rd;
+    mt19937 g(rd());
+ 
+    std::shuffle(m_cards.begin(), m_cards.end(), g);
+}
+
+void Deck::deal(Hand& hand){
+	if (!m_cards.empty()){
+        cout << "m_cards is not empty" << endl;
+        hand.add_card(m_cards.back());
+        m_cards.pop_back();
+    }
+    else{
+        cout << "Out of cards. Unable to deal.";
+    }
+}
+
+void Deck::more_cards(GenericPlayer& player){
+	cout << endl;
+    while (!(player.is_busted()) && player.is_hitting()) {
+        deal(player);
+        cout << player << endl;
+        
+        if (player.is_busted()) {
+            player.set_busted();
+        }
+    }
+}
+
 /************************************************************** 
 				Game
 **************************************************************/
@@ -274,10 +358,88 @@ Game::Game(){
 }
 
 Game::Game(vector<string>& names){
-	m_names = names;
+    vector<string>::const_iterator pName;
+    for (string name: names){
+        m_players.push_back(Player(name));
+    }
+    
+	m_house.set_name("House");
+    m_deck.populate();
+    m_deck.shuffle();
 }
 
-bool Game::play(){
-	// stub
-	return true;
+/*virtual*/
+Game::~Game(){
+}
+
+void Game::play(){
+    vector<Player>::iterator pPlayer;
+
+	// раздает каждому по две стартовые карты
+	//
+    for (int i = 0; i < 2; ++i){
+        for (Player p: m_players){
+            m_deck.deal(p);
+        }
+        m_deck.deal(m_house);
+    }
+
+    // прячет первую карту дилера
+	//
+    m_house.show_first_card(false);
+    
+    // открывает руки всех игроков
+	//
+    for (Player player: m_players){
+        cout << player << endl;
+    }
+    cout << m_house << endl;
+    
+    // раздает игрокам дополнительные карты
+	//
+    for (Player player: m_players){
+        m_deck.more_cards(player);
+    }
+ 
+    // показывает первую карту дилера
+	//
+    m_house.show_first_card(true);
+    cout << endl << m_house;
+    
+    // раздает дилеру дополнительные карты
+	//
+    m_deck.more_cards(m_house);
+    
+    if (m_house.is_busted()){
+        // все, кто остался в игре, побеждают
+        for (Player player: m_players){
+            if (!(player.is_busted())){
+                player.set_win();
+            }
+        }
+    }
+    else {
+        // сравнивает суммы очков всех оставшихся игроков с суммой очков дилера
+		//
+        for (Player player: m_players) {
+            if (!(player.is_busted())){
+                if (player.get_total() > m_house.get_total()){
+                    player.set_win();
+                }
+                else if (player.get_total() < m_house.get_total()){
+                    player.set_lose();
+                }
+                else{
+                    player.set_push();
+                }
+            }
+        }
+    }
+    
+    // очищает руки всех игроков
+	//
+    for (Player player: m_players){
+        player.clear();
+    }
+    m_house.clear();
 }

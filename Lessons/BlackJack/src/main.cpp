@@ -22,28 +22,25 @@ int main()
 	cout << "Welcome to Blackjack!" << endl;
     
     int numPlayers = 0;
-    while (numPlayers < 1 || numPlayers > 7)
-    {
+    while (numPlayers < 1 || numPlayers > 7){
         cout << "How many players? (1 - 7): ";
         cin >> numPlayers;
     }
 
     vector<string> names;
     string name;
-    for (int i = 0; i < numPlayers; ++i)
-    {
+    for (int i = 0; i < numPlayers; ++i){
         cout << "Enter player name: ";
         cin >> name;
         names.push_back(name);
     }
     cout << endl;
 
-    // игровой цикл
-    Game aGame(names);
+    Game game(names);
     char again = 'y';
-    while (again != 'n' && again != 'N')
-    {
-        aGame.play();
+
+    while (again != 'n' && again != 'N'){
+        game.play();
         cout << endl << "Do you want to play again? (Y/N): ";
         cin >> again;
     }

@@ -16,7 +16,7 @@ using namespace std;
 
 class Card {
 public:
-	enum class Suites {
+	enum class Suites : int {
 		Unknown = 0,
 		Crosses, 
 		Diamonds,
@@ -55,6 +55,7 @@ public:
 
 	bool is_face_up() const { return m_faced_up; }
 	void face_flip() { m_faced_up = !m_faced_up; }
+	void show_face(bool show);
 
 	const string p() const;
 	
@@ -95,8 +96,8 @@ public:
 
 public:
 	virtual bool is_hitting() const = 0;
-	bool is_boosted() const;
-	void set_boost() const;
+	bool is_busted() const;
+	void set_busted() const;
 
 	const char* get_name() const;
 
@@ -123,23 +124,40 @@ class House : public GenericPlayer {
 public:
     House();
     House(const string& name);
+	void set_name(const char* name);
     
     virtual ~House();
     
     virtual bool is_hitting() const;
     
     void flip_first_card();
+	void show_first_card(bool show);
+};
+
+class Deck : public Hand
+{
+public:
+    Deck();
+    virtual ~Deck();
+    
+    void populate();
+    void shuffle();
+    void deal(Hand& hand);
+    void more_cards(GenericPlayer& player);
 };
 
 class Game{
-	vector<string> m_names;
+	Deck m_deck;
+	House m_house;
+	vector<Player> m_players;
 
 public:
 	Game();
 	Game(vector<string>& names);
+	virtual ~Game();
 
 public:
-	bool play();
+	void play();
 };
 
 #endif // !_BJ_HPP_
